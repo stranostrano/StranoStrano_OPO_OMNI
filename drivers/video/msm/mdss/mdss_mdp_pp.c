@@ -23,7 +23,7 @@
 #include <mach/msm_bus_board.h>
 
 #ifdef CONFIG_LCD_KCAL
-#include <mach/msm_lcd_kcal.h>
+#include <mach/kcal.h>
 extern int g_kcal_r;
 extern int g_kcal_g;
 extern int g_kcal_b;
