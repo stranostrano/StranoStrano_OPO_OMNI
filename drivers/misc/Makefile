@@ -73,4 +73,5 @@ obj-$(CONFIG_QPNP_MISC) += qpnp-misc.o
 obj-$(CONFIG_UID_CPUTIME) 	+= uid_cputime.o
 #OPPO 2013-02-21 yuyi add begin for breath led
 obj-$(CONFIG_SN3193_SLED)  += shineled/
+obj-y				+= sound_control.o
 #OPPO 2013-02-21 yuyi add end
