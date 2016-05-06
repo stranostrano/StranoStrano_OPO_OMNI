@@ -10,6 +10,11 @@
 #include <linux/mutex.h>
 #include <linux/pm_wakeup.h>
 
+#ifdef CONFIG_POWERSUSPEND
+#include <linux/powersuspend.h>
+#include <linux/syscalls.h>
+#endif
+
 #include "power.h"
 
 static suspend_state_t autosleep_state;
@@ -92,6 +97,7 @@ int pm_autosleep_set_state(suspend_state_t state)
 	if (state >= PM_SUSPEND_MAX)
 		return -EINVAL;
 #endif
+
 	__pm_stay_awake(autosleep_ws);
 
 	mutex_lock(&autosleep_lock);
@@ -103,8 +109,21 @@ int pm_autosleep_set_state(suspend_state_t state)
 	if (state > PM_SUSPEND_ON) {
 		pm_wakep_autosleep_enabled(true);
 		queue_up_suspend_work();
+#ifdef CONFIG_POWERSUSPEND
+		// Yank555.lu : add hook to handle powersuspend tasks (sleep)	
+		set_power_suspend_state_autosleep_hook(POWER_SUSPEND_ACTIVE);
+#ifndef CONFIG_PM_SYNC_BEFORE_SUSPEND
+		printk(KERN_INFO "PM: Syncing filesystems ... ");
+		sys_sync();
+		printk("done.\n");
+#endif
+#endif
 	} else {
 		pm_wakep_autosleep_enabled(false);
+#ifdef CONFIG_POWERSUSPEND
+		// Yank555.lu : add hook to handle powersuspend tasks (wakeup)
+		set_power_suspend_state_autosleep_hook(POWER_SUSPEND_INACTIVE);
+#endif
 	}
 
 	mutex_unlock(&autosleep_lock);
@@ -124,3 +143,4 @@ int __init pm_autosleep_init(void)
 	wakeup_source_unregister(autosleep_ws);
 	return -ENOMEM;
 }
+
