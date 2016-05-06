@@ -123,56 +123,6 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
-config CPU_FREQ_DEFAULT_GOV_WHEATLEY
-	bool "wheatley"
-	select CPU_FREQ_GOV_WHEATLEY
-	select CPU_FREQ_GOV_PERFORMANCE
-	help
-       Use the CPUFreq governor 'wheatley' as default.
-
-config CPU_FREQ_DEFAULT_GOV_SLIM
-	bool "slim"
-	select CPU_FREQ_GOV_SLIM
-	select CPU_FREQ_GOV_PERFORMANCE
-	help
-	  Use the CPUFreq governor 'slim' as default.
-
-config CPU_FREQ_DEFAULT_GOV_YANKACTIVE
- 	   bool "yankactive"
-  	   select CPU_FREQ_GOV_YANKACTIVE
-	   help
-	   Use the CPUFreq governor 'yankactive' as default. This allows
-	   you to get a full dynamic cpu frequency capable system by simply
-	   loading your cpufreq low-level hardware driver, using the
-	   'yankactive' governor for latency-sensitive workloads.
-
-config CPU_FREQ_DEFAULT_GOV_ONDEMANDPLUS
-	bool "ondemandplus"
-	select CPU_FREQ_GOV_ONDEMANDPLUS
-	help
-	Use the CPUFreq governor 'ondemandplus' as default.
-
-config CPU_FREQ_DEFAULT_GOV_ADAPTIVE
-	bool "adaptive"
-	select CPU_FREQ_GOV_ADAPTIVE
-	---help---
-	  Use the CPUFreq governor 'adaptive' as default. This allows
-	  you to get a full dynamic cpu frequency capable system by simply
-	  loading your cpufreq low-level hardware driver, using the
-	  'adaptive' governor for latency-sensitive workloads and demanding
-	  performance.
-
-config CPU_FREQ_DEFAULT_GOV_DARKNESS
-	bool "darkness"
-  	select CPU_FREQ_GOV_DARKNESS
-  	help
-
-config CPU_FREQ_DEFAULT_GOV_NIGHTMARE
-	bool "nightmare"
-	select CPU_FREQ_GOV_NIGHTMARE
-	help
-	Use the CPUFreq governor 'nightmare' as default.
-
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -303,66 +253,6 @@ config CPU_FREQ_GOV_CONSERVATIVE
 	  For details, take a look at linux/Documentation/cpu-freq.
 
 	  If in doubt, say N.
-
-config CPU_FREQ_GOV_WHEATLEY
-	tristate "'wheatley' cpufreq governor"
-	depends on CPU_FREQ
-
-config CPU_FREQ_GOV_SLIM
-	tristate "'slim' cpufreq policy governor"
-	select CPU_FREQ_TABLE
-	help
-	  'slim' - This driver adds a dynamic cpufreq policy governor.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called cpufreq_slim.
-
-	  For details, take a look at linux/Documentation/cpu-freq.
-
-	  If in doubt, say N.
-
-config CPU_FREQ_GOV_YANKACTIVE
-	  tristate "'yankactive' cpufreq policy governor"
-	  help
-	  'yankactive' - This driver adds a dynamic cpufreq policy governor
-	  designed for latency-sensitive workloads.
-	  The governor is based on interactive with just different default settings
-	  and can be achieved using interactive with a script. This is added for
-	  simplification purposes for myself.
-
-config CPU_FREQ_GOV_ONDEMANDPLUS
-	tristate "'ondemandplus' cpufreq governor"
-	depends on CPU_FREQ	  
-
-config CPU_FREQ_GOV_ADAPTIVE
-	tristate "'adaptive' cpufreq policy governor"
-	default y
-	help
-	  'adaptive' - This driver adds a dynamic cpufreq policy governor
-	  designed for latency-sensitive workloads and also for demanding
-	  performance.
-
-	  This governor attempts to reduce the latency of clock
-	  increases so that the system is more responsive to
-	  interactive workloads in loweset steady-state but to
-	  to reduce power consumption in middle operation level level up
-	  will be done in step by step to prohibit system from going to
-	  max operation level.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called cpufreq_adaptive.
-
-	  For details, take a look at linux/Documentation/cpu-freq.
-
-	  If in doubt, say N.
-
-config CPU_FREQ_GOV_DARKNESS
-	tristate "'darkness' cpufreq governor"
-	depends on CPU_FREQ
-
-config CPU_FREQ_GOV_NIGHTMARE
-	tristate "'nightmare' cpufreq governor"
-	depends on CPU_FREQ
 
 menu "x86 CPU frequency scaling drivers"
 depends on X86
